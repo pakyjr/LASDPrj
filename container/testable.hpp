@@ -8,50 +8,44 @@
 
 /* ************************************************************************** */
 
-namespace lasd {
+namespace lasd
+{
 
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
-template <typename Data>
-class TestableContainer {
-  // Must extend Container
+  template <typename Data>
+  class TestableContainer : public Container
+  {
+    // Must extend Container
 
-private:
+  private:
+  protected:
+  public:
+    // Destructor
+    ~TestableContainer() = default;
 
-  // ...
+    /* ************************************************************************ */
 
-protected:
+    // Copy assignment
+    TestableContainer &operator=(const TestableContainer &); // Copy assignment of abstract types is not possible.
 
-  // ...
+    // Move assignment
+    TestableContainer &operator=(const TestableContainer &&); // Move assignment of abstract types is not possible.
 
-public:
+    /* ************************************************************************ */
 
-  // Destructor
-  // ~TestableContainer() specifiers
+    // Comparison operators
+    TestableContainer &operator==(const TestableContainer &); // Comparison of abstract types is not possible.
+    TestableContainer &operator!=(const TestableContainer &); // Comparison of abstract types is not possible.
 
-  /* ************************************************************************ */
+    /* ************************************************************************ */
 
-  // Copy assignment
-  // type operator=(argument); // Copy assignment of abstract types is not possible.
+    // Specific member function
 
-  // Move assignment
-  // type operator=(argument); // Move assignment of abstract types is not possible.
+    bool Exists(Data); // (concrete function should not throw exceptions)
+  };
 
-  /* ************************************************************************ */
-
-  // Comparison operators
-  // type operator==(argument) specifiers; // Comparison of abstract types is not possible.
-  // type operator!=(argument) specifiers; // Comparison of abstract types is not possible.
-
-  /* ************************************************************************ */
-
-  // Specific member function
-
-  // type Exists(argument) specifiers; // (concrete function should not throw exceptions)
-
-};
-
-/* ************************************************************************** */
+  /* ************************************************************************** */
 
 }
 
