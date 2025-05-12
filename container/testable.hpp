@@ -42,7 +42,7 @@ namespace lasd
 
     // Specific member function
 
-    bool Exists(Data); // (concrete function should not throw exceptions)
+    virtual bool Exists(Data); // (concrete function should not throw exceptions)
   };
 
   /* ************************************************************************** */

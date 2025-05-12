@@ -15,7 +15,7 @@ namespace lasd
   /* ************************************************************************** */
 
   template <typename Data>
-  class DictionaryContainer : public TestableContainer
+  class DictionaryContainer : public TestableContainer<Data>
   {
 
   private:
@@ -42,9 +42,9 @@ namespace lasd
 
     // Specific member functions
 
-    // type Insert(argument) specifiers; // Copy of the value
-    // type Insert(argument) specifiers; // Move of the value
-    // type Remove(argument) specifiers;
+    bool Insert(Data &data);  // Copy of the value
+    bool Insert(Data &&data); // Move of the value
+    bool Remove(Data &data);
 
     // type InsertAll(argument) specifiers; // Copy of the value; From TraversableContainer; True if all are inserted
     // type InsertAll(argument) specifiers; // Move of the value; From MappableContainer; True if all are inserted
