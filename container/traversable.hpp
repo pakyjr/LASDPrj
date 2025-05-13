@@ -63,7 +63,7 @@ namespace lasd
 
     // Specific member function (inherited from TestableContainer)
 
-    bool Exists(const Data &data) override; // Override TestableContainer member
+    inline bool Exists(const Data &data) const noexcept override; // Override TestableContainer member
   };
 
   /* ************************************************************************** */
@@ -102,7 +102,7 @@ namespace lasd
 
     using typename TraversableContainer<Data>::TraverseFun;
 
-    void PreOrderTraverse(TraverseFun);
+    void PreOrderTraverse(TraverseFun) const;
 
     template <typename Accumulator>
     using FoldFun = typename TraversableContainer<Data>::template FoldFun<Accumulator>;
@@ -156,19 +156,19 @@ namespace lasd
 
     using typename TraversableContainer<Data>::TraverseFun;
 
-    void PostOrderTraverse(TraverseFun);
+    void PostOrderTraverse(TraverseFun) const;
 
     template <typename Accumulator>
     using FoldFun = typename TraversableContainer<Data>::template FoldFun<Accumulator>;
 
     template <typename Accumulator>
-    Accumulator PostOrderFold(FoldFun<Accumulator>, Accumulator);
+    Accumulator PostOrderFold(FoldFun<Accumulator>, Accumulator) const;
 
     /* ************************************************************************ */
 
     // Specific member function (inherited from TraversableContainer)
 
-    void Traverse(TraverseFun) override;
+    void Traverse(TraverseFun) const override;
   };
 
   /* ************************************************************************** */

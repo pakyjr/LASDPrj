@@ -29,13 +29,60 @@ namespace lasd
         foldFun takes data& (passed in the lambda), and the accumulator, which will be returned by Fold()
         */
 
-        // inline since well, it takes a lambda
+        // inline since well, its basically a lambda
 
         Traverse([&acc, foldFun](const Data &data)
                  { acc = foldFun(data, acc) });
 
         return acc;
     }
+
+    template <typename Data>
+    inline bool TraversableContainer<Data>::Exists(const Data &data) const noexcept
+    {
+        bool exists = false;
+        Traverse([data, &exists](const Data &currData)
+                 { exists |= (data == currData); });
+        return exists;
+    }
+    /* ************************************************************************** */
+
+    // PreOrderTraversableContainer Methods
+    template <typename Data>
+    inline void PreOrderTraversableContainer<Data>::Traverse(TraverseFun func) const
+    {
+        PreOrderTraverse(func);
+    }
+
+    template <typename Data>
+    template <typename Accumulator>
+    Accumulator PreOrderTraversableContainer<Data>::PreOrderFold(FoldFun<Accumulator> func, const Accumulator acc) const
+    {
+        PreOrderTraverse([func, &acc](const Data &data)
+                         { acc = func(data, acc); });
+
+        return acc;
+    }
+
+    /* ************************************************************************** */
+
+    // PostOrderTraversableContainer Methods
+
+    template <typename Data>
+    void PostOrderTraversableContainer<Data>::Traverse(TraverseFun func) const
+    {
+        PostOrderTraverse(func);
+    }
+
+    template <typename Data>
+    template <typename Accumulator>
+    Accumulator PostOrderTraversableContainer<Data>::PostOrderFold(FoldFun<Accumulator> func, Accumulator base) const
+    {
+        PostOrderTraverse(
+            [&base, &func](const Data &currData)
+            { base = func(currData, base); });
+        return base;
+    };
 
     /* ************************************************************************** */
 }
