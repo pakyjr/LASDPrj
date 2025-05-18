@@ -46,8 +46,15 @@ namespace lasd
 
     // Specific member functions
 
-    bool Empty(); // (concrete function should not throw exceptions)
-    uint Size();  // (concrete function should not throw exceptions)
+    bool Empty() const noexcept
+    {
+      return (size == 0);
+    }
+    // (concrete function should not throw exceptions)
+    ulong Size() const noexcept
+    {
+      return size;
+    } // (concrete function should not throw exceptions)
   };
 
   /* ************************************************************************** */

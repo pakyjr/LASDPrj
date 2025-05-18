@@ -76,6 +76,17 @@ namespace lasd
     // Specific member function (inherited from PostOrderTraversableContainer)
 
     inline void PostOrderTraverse(TraverseFun) const override; // Override PostOrderTraversableContainer member
+    template <typename Accumulator>
+    using FoldFun = typename TraversableContainer<Data>::template FoldFun<Accumulator>;
+
+    template <typename Accumulator>
+    Accumulator Fold(FoldFun<Accumulator>, const Accumulator &) const;
+
+    template <typename Accumulator>
+    Accumulator PreOrderFold(FoldFun<Accumulator>, const Accumulator &) const;
+
+    template <typename Accumulator>
+    Accumulator PostOrderFold(FoldFun<Accumulator>, const Accumulator &) const;
   };
 
   /* ************************************************************************** */
@@ -123,23 +134,23 @@ namespace lasd
     /* ************************************************************************ */
 
     // Specific member function (inherited from PreOrderMappableContainer)
-
-    void PreOrderMap(MapFun) override; // Override PreOrderMappableContainer member
+    void PreOrderMap(MapFun) override;  // Override PreOrderMappableContainer member
+    void PostOrderMap(MapFun) override; // Override PostOrderMappableContainer member
 
     /* ************************************************************************ */
 
     // Specific member function (inherited from PostOrderMappableContainer)
-
-    void PostOrderMap(Mapfun) override; // Override PostOrderMappableContainer member
   };
 
   template <typename Data>
-  class SortableLinearContaine : virtual public MutableLinearContainer<Data>
+  class SortableLinearContainer : virtual public MutableLinearContainer<Data>
   {
     // Must extend MutableLinearContainer<Data>
 
   private:
     // ...
+    virtual void QuickSort(ulong, ulong);
+    virtual ulong Partition(ulong, ulong);
 
   protected:
     // ...
@@ -161,11 +172,6 @@ namespace lasd
     // Specific member function
 
     virtual void Sort() const noexcept = 0;
-
-  protected:
-    // Auxiliary member functions
-
-    // ...
   };
 
   /* ************************************************************************** */

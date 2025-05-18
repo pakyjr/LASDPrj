@@ -22,7 +22,7 @@ namespace lasd
   protected:
   public:
     // Destructor
-    ~DictionaryContainer() = default;
+    virtual ~DictionaryContainer() = default;
 
     /* ************************************************************************ */
 
@@ -41,18 +41,17 @@ namespace lasd
     /* ************************************************************************ */
 
     // Specific member functions
+    virtual bool Insert(const Data &) = 0;
+    virtual bool Insert(Data &&) = 0;
+    virtual bool Remove(const Data &) = 0;
 
-    bool Insert(Data &data);  // Copy of the value
-    bool Insert(Data &&data); // Move of the value
-    bool Remove(Data &data);
+    virtual bool InsertAll(const TraversableContainer<Data> &); // Copy of the value; From TraversableContainer; True if all are inserted
+    virtual bool InsertAll(MappableContainer<Data> &&);         // Move of the value; From MappableContainer; True if all are inserted
+    virtual bool RemoveAll(const TraversableContainer<Data> &); // From TraversableContainer; True if all are removed
 
-    // type InsertAll(argument) specifiers; // Copy of the value; From TraversableContainer; True if all are inserted
-    // type InsertAll(argument) specifiers; // Move of the value; From MappableContainer; True if all are inserted
-    // type RemoveAll(argument) specifiers; // From TraversableContainer; True if all are removed
-
-    // type InsertSome(argument) specifiers; // Copy of the value; From TraversableContainer; True if some is inserted
-    // type InsertSome(argument) specifiers; // Move of the value; From MappableContainer; True if some is inserted
-    // type RemoveSome(argument) specifiers; // From TraversableContainer; True if some is removed
+    virtual bool InsertSome(const TraversableContainer<Data> &); // Copy of the value; From TraversableContainer; True if some is inserted
+    virtual bool InsertSome(MappableContainer<Data> &&);         // Move of the value; From MappableContainer; True if some is inserted
+    virtual bool RemoveSome(const TraversableContainer<Data> &); // From TraversableContainer; True if some is removed
   };
 
   /* ************************************************************************** */
