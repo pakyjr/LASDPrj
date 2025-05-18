@@ -57,53 +57,43 @@ namespace lasd
   /* ************************************************************************** */
 
   template <typename Data>
-  class OrderedDictionaryContainer
+  class OrderedDictionaryContainer : virtual public DictionaryContainer<Data>
   {
     // Must extend DictionaryContainer<Data>
 
   private:
   protected:
   public:
-    // Destructor
-    // ~OrderedDictionaryContainer() specifiers
+    virtual ~OrderedDictionaryContainer() = default;
 
-    /* ************************************************************************ */
+    OrderedDictionaryContainer &operator=(const OrderedDictionaryContainer &) = delete;
 
-    // Copy assignment
-    // type operator=(argument); // Copy assignment of abstract types is not possible.
+    OrderedDictionaryContainer &operator=(OrderedDictionaryContainer &&) noexcept = delete;
 
-    // Move assignment
-    // type operator=(argument); // Move assignment of abstract types is not possible.
-
-    /* ************************************************************************ */
-
-    // Comparison operators
-    // type operator==(argument) specifiers; // Comparison of abstract types is not possible.
-    // type operator!=(argument) specifiers; // Comparison of abstract types is not possible.
+    bool operator==(const OrderedDictionaryContainer &) const noexcept = delete;
+    bool operator!=(const OrderedDictionaryContainer &) const noexcept = delete;
 
     /* ************************************************************************ */
 
     // Specific member functions
 
-    // type Min(argument) specifiers; // (concrete function must throw std::length_error when empty)
-    // type MinNRemove(argument) specifiers; // (concrete function must throw std::length_error when empty)
-    // type RemoveMin(argument) specifiers; // (concrete function must throw std::length_error when empty)
+    virtual const Data &Min() const = 0; // (concrete function must throw std::length_error when empty)
+    virtual Data MinNRemove();           // (concrete function must throw std::length_error when empty)
+    virtual void RemoveMin();            // (concrete function must throw std::length_error when empty)
 
-    // type Max(argument) specifiers; // (concrete function must throw std::length_error when empty)
-    // type MaxNRemove(argument) specifiers; // (concrete function must throw std::length_error when empty)
-    // type RemoveMax(argument) specifiers; // (concrete function must throw std::length_error when empty)
+    virtual const Data &Max() const = 0; // (concrete function must throw std::length_error when empty)
+    virtual Data MaxNRemove();           // (concrete function must throw std::length_error when empty)
+    virtual void RemoveMax();            // (concrete function must throw std::length_error when empty)
 
-    // type Predecessor(argument) specifiers; // (concrete function must throw std::length_error when not found)
-    // type PredecessorNRemove(argument) specifiers; // (concrete function must throw std::length_error when not found)
-    // type RemovePredecessor(argument) specifiers; // (concrete function must throw std::length_error when not found)
+    virtual const Data &Predecessor(const Data &) const = 0; // (concrete function must throw std::length_error when not found)
+    virtual Data PredecessorNRemove(const Data &);           // (concrete function must throw std::length_error when not found)
+    virtual void RemovePredecessor(const Data &);            // (concrete function must throw std::length_error when not found)
 
-    // type Successor(argument) specifiers; // (concrete function must throw std::length_error when not found)
-    // type SuccessorNRemove(argument) specifiers; // (concrete function must throw std::length_error when not found)
-    // type RemoveSuccessor(argument) specifiers; // (concrete function must throw std::length_error when not found)
+    virtual const Data &Successor(const Data &) const = 0; // (concrete function must throw std::length_error when not found)
+    virtual Data SuccessorNRemove(const Data &);           // (concrete function must throw std::length_error when not found)
+    virtual void RemoveSuccessor(const Data &);            // (concrete function must throw std::length_error when not found)
   };
-
   /* ************************************************************************** */
-
 }
 
 #include "dictionary.cpp"
