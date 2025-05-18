@@ -1,4 +1,4 @@
-
+#include "traversable.hpp"
 namespace lasd
 {
 
@@ -9,8 +9,6 @@ namespace lasd
 
     you can see how it would be uncomfortarble to define in everytime.
     */
-    template <typename Data, typename Accumulator>
-    using FoldFun = typename TraversableContainer<Data>::template FoldFun<Accumulator>;
 
     template <typename Data>
     template <typename Accumulator>
@@ -32,7 +30,7 @@ namespace lasd
         // inline since well, its basically a lambda
 
         Traverse([&acc, foldFun](const Data &data)
-                 { acc = foldFun(data, acc) });
+                 { acc = foldFun(data, acc); });
 
         return acc;
     }
@@ -82,7 +80,10 @@ namespace lasd
             [&base, &func](const Data &currData)
             { base = func(currData, base); });
         return base;
-    };
+    }
+
+    template <typename Accumulator>
+    Accumulator Fold(FoldFun<Accumulator>, const Accumulator &) const;
 
     /* ************************************************************************** */
 }

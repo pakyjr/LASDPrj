@@ -117,7 +117,7 @@ namespace lasd
     void Traverse(TraverseFun) const override;
 
     template <typename Accumulator>
-    Accumulator Fold(FoldFun<Accumulator>, const Accumulator &) const;
+    Accumulator
   };
 
   /* ************************************************************************** */
@@ -156,7 +156,7 @@ namespace lasd
 
     using typename TraversableContainer<Data>::TraverseFun;
 
-    void PostOrderTraverse(TraverseFun) const;
+    virtual void PostOrderTraverse(TraverseFun) const = 0;
 
     template <typename Accumulator>
     using FoldFun = typename TraversableContainer<Data>::template FoldFun<Accumulator>;

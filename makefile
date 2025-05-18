@@ -16,7 +16,9 @@ main: $(objects)
 	$(cc) $(cflags) $(objects) -o main
 
 clean:
-	clear; rm -rfv *.o; rm -fv main
+	clear
+	rm -rfv *.o
+	rm -fv main
 
 main.o: main.cpp
 	$(cc) $(cflags) -c main.cpp
