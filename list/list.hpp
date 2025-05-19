@@ -1,62 +1,37 @@
-
 #ifndef LIST_HPP
 #define LIST_HPP
 
-/* ************************************************************************** */
-
 #include "../container/linear.hpp"
-
-/* ************************************************************************** */
 
 namespace lasd
 {
 
-  /* ************************************************************************** */
-
+  /*******************************************************************************************************************************************************/
   template <typename Data>
   class List : virtual public MutableLinearContainer<Data>,
-               virtual public ClearableContainer<Data>
+               virtual public ClearableContainer
   {
-    // Must extend MutableLinearContainer<Data>,
-    //             ClearableContainer
-
-  private:
-    // ...
 
   protected:
     using Container::size;
-
     struct Node
     {
-
       Data data;
       Node *next = nullptr;
 
-      /* ********************************************************************** */
-
-      // Specific constructors
       Node() = default;
       explicit Node(const Data &value) : data(value) {}
-      explicit Node(const Data &&value) : data(std::move(value)) {}
-      /* ********************************************************************** */
+      explicit Node(Data &&value) noexcept : data(std::move(value)) {}
 
-      // Copy constructor
       Node(const Node &other) : data(other.data), next(nullptr) {}
 
-      // Move constructor
       Node(Node &&other) noexcept : data(std::move(other.data)), next(other.next)
       {
         other.next = nullptr;
       }
 
-      /* ********************************************************************** */
-
-      // Destructor
       virtual ~Node() = default;
 
-      /* ********************************************************************** */
-
-      // Comparison operators
       bool operator==(const Node &other) const noexcept
       {
         return (data == other.data);
@@ -66,15 +41,10 @@ namespace lasd
       {
         return !(*this == other);
       }
-
-      /* ********************************************************************** */
-
-      // Specific member functions
-      Node *head = nullptr;
-      Node *tail = nullptr;
     };
 
-    // ...
+    Node *head = nullptr;
+    Node *tail = nullptr;
 
   public:
     List() = default;
@@ -134,7 +104,7 @@ namespace lasd
     Node *GetNodeAt(ulong index) const;
   };
 
-  /* ************************************************************************** */
+  /*******************************************************************************************************************************************************/
 
 }
 

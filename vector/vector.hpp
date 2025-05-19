@@ -1,24 +1,17 @@
-
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-/* ************************************************************************** */
-
 #include "../container/linear.hpp"
-
-/* ************************************************************************** */
 
 namespace lasd
 {
 
-  /* ************************************************************************** */
+  /*******************************************************************************************************************************************************/
 
   template <typename Data>
   class Vector : virtual public MutableLinearContainer<Data>,
                  virtual public ResizableContainer
   {
-    // Must extend MutableLinearContainer<Data>,
-    //             ResizableContainer
 
   private:
     // ...
@@ -27,33 +20,20 @@ namespace lasd
     using Container::size;
 
     Data *elements = nullptr;
-    // ...
 
   public:
-    // Default constructor
     Vector() = default;
 
-    /* ************************************************************************ */
+    explicit Vector(unsigned long);
+    Vector(const TraversableContainer<Data> &);
+    Vector(MappableContainer<Data> &&);
 
-    // Specific constructors
-    Vector(ulong);                              // A vector with a given initial dimension
-    Vector(const TraversableContainer<Data> &); // A vector obtained from a TraversableContainer
-    Vector(MappableContainer<Data> &&);         // A vector obtained from a MappableContainer
-
-    /* ************************************************************************ */
-
-    // Copy constructor
     Vector(const Vector &);
 
-    // Move constructor
-    Vector(Vector &&);
+    Vector(Vector &&) noexcept;
 
-    /* ************************************************************************ */
-
-    // Destructor
     virtual ~Vector();
 
-    /* ************************************************************************ */
     Vector &operator=(const Vector &);
 
     Vector &operator=(Vector &&) noexcept;
@@ -63,62 +43,42 @@ namespace lasd
 
     bool operator==(const Vector &) const noexcept;
     bool operator!=(const Vector &) const noexcept;
-    /* ************************************************************************ */
 
-    // Specific member functions (inherited from MutableLinearContainer)
     Data &operator[](unsigned long) override;
     Data &Front() override;
     Data &Back() override;
-
-    /* ************************************************************************ */
-
-    // Specific member functions (inherited from LinearContainer)
 
     const Data &operator[](unsigned long) const override;
     const Data &Front() const override;
     const Data &Back() const override;
 
-    /* ************************************************************************ */
+    void Resize(unsigned long) override;
 
-    // Specific member function (inherited from ResizableContainer)
-
-    void Resize(ulong) override; // Override ResizableContainer member
-
-    /* ************************************************************************ */
-
-    // Specific member function (inherited from ClearableContainer)
-
-    void Clear() override; // Override ClearableContainer member
+    void Clear() override;
 
   protected:
     void Swap(Vector &) noexcept;
   };
 
-  /* ************************************************************************** */
+  /*******************************************************************************************************************************************************/
 
   template <typename Data>
-  class SortableVector : virtual public Vector<Data>, virtual public SortableLinearContainer<Data>
+  class SortableVector : virtual public Vector<Data>,
+                         virtual public SortableLinearContainer<Data>
   {
+
   private:
     // ...
 
   protected:
-    // using Container::???;
-
     // ...
 
   public:
-    // Default constructor
     SortableVector() = default;
 
-    /* ************************************************************************ */
-
-    // Specific constructors
-    explicit SortableVector(ulong newSize) : Vector<Data>(newSize) {}                           // A vector with a given initial dimension
-    SortableVector(const TraversableContainer<Data> &container) : Vector<Data>(container) {}    // A vector obtained from a TraversableContainer
-    SortableVector(MappableContainer<Data> &&container) : Vector<Data>(std::move(container)) {} // A vector obtained from a MappableContainer
-
-    /* ************************************************************************ */
+    explicit SortableVector(unsigned long newSize) : Vector<Data>(newSize) {}
+    SortableVector(const TraversableContainer<Data> &container) : Vector<Data>(container) {}
+    SortableVector(MappableContainer<Data> &&container) : Vector<Data>(std::move(container)) {}
 
     SortableVector(const SortableVector &other) : Vector<Data>(other) {}
 
@@ -145,6 +105,9 @@ namespace lasd
     unsigned long Partition(unsigned long, unsigned long);
     void Swap(unsigned long, unsigned long);
   };
+
+  /*******************************************************************************************************************************************************/
+
 }
 
 #include "vector.cpp"
