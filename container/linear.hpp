@@ -69,7 +69,7 @@ namespace lasd
 
     // Specific member function (inherited from PreOrderTraversableContainer)
 
-    inline void PreOrderTraverse(TraverseFun) const override; // Override PreOrderTraversableContainer member
+    void PreOrderTraverse(TraverseFun) const override; // Override PreOrderTraversableContainer member
 
     /* ************************************************************************ */
 

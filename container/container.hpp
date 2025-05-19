@@ -1,6 +1,7 @@
 
 #ifndef CONTAINER_HPP
 #define CONTAINER_HPP
+typedef unsigned long ulong;
 
 /* ************************************************************************** */
 
@@ -8,8 +9,6 @@ namespace lasd
 {
 
   /* ************************************************************************** */
-
-  typedef unsigned long ulong;
 
   class Container
   {

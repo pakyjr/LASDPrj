@@ -42,7 +42,7 @@ namespace lasd
 
     using MapFun = std::function<void(Data &)>;
 
-    virtual void Map(MapFun) = 0; // TODO why map takes another map callback?
+    virtual void Map(MapFun) = 0;
   };
 
   /* ************************************************************************** */
@@ -73,7 +73,7 @@ namespace lasd
 
     using typename MappableContainer<Data>::MapFun;
 
-    virtual void PreOrderMap(TraverseFun) = 0;
+    virtual void PreOrderMap(MapFun) = 0;
 
     /* ************************************************************************ */
 
@@ -99,7 +99,7 @@ namespace lasd
 
   public:
     // Destructor
-    / Distruttore virtual ~PostOrderMappableContainer() = default;
+    virtual ~PostOrderMappableContainer() = default;
 
     PostOrderMappableContainer &operator=(const PostOrderMappableContainer &) = delete;
 

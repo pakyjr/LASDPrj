@@ -34,7 +34,7 @@ namespace lasd
     }
 
     template <typename Data>
-    void LinearContainer<Data>::PreOrderTraverse(TraverseFun tFunc) const noexcept
+    void LinearContainer<Data>::PreOrderTraverse(TraverseFun tFunc) const
     {
         for (ulong i = 0; i < this->Size(); i++)
         {
