@@ -19,10 +19,13 @@ using namespace std;
 
 /* ************************************************************************** */
 
-void stestVectorInt(uint & testnum, uint & testerr) {
+void stestVectorInt(uint &testnum, uint &testerr)
+{
   uint loctestnum = 0, loctesterr = 0;
-  cout << endl << "Begin of Vector<int> Test:" << endl;
-  try {
+  cout << endl
+       << "Begin of Vector<int> Test:" << endl;
+  try
+  {
     {
       lasd::SortableVector<int> vec;
       Empty(loctestnum, loctesterr, vec, true);
@@ -71,19 +74,25 @@ void stestVectorInt(uint & testnum, uint & testerr) {
       FoldPostOrder(loctestnum, loctesterr, vec, true, &FoldMultiply<int>, 1, 12);
     }
   }
-  catch (...) {
-    loctestnum++; loctesterr++;
-    cout << endl << "Unmanaged error! " << endl;
+  catch (...)
+  {
+    loctestnum++;
+    loctesterr++;
+    cout << endl
+         << "Unmanaged error! " << endl;
   }
   cout << "End of Vector<int> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
   testnum += loctestnum;
   testerr += loctesterr;
 }
 
-void stestVectorDouble(uint & testnum, uint & testerr) {
+void stestVectorDouble(uint &testnum, uint &testerr)
+{
   uint loctestnum = 0, loctesterr = 0;
-  cout << endl << "Begin of Vector<double> Test:" << endl;
-  try {
+  cout << endl
+       << "Begin of Vector<double> Test:" << endl;
+  try
+  {
     lasd::SortableVector<double> vec(3);
     Empty(loctestnum, loctesterr, vec, false);
     Size(loctestnum, loctesterr, vec, true, 3);
@@ -100,19 +109,25 @@ void stestVectorDouble(uint & testnum, uint & testerr) {
     FoldPreOrder(loctestnum, loctesterr, vec, true, &FoldAdd<double>, 0.0, 9.9);
     FoldPostOrder(loctestnum, loctesterr, vec, true, &FoldMultiply<double>, 1.0, 19.965);
   }
-  catch (...) {
-    loctestnum++; loctesterr++;
-    cout << endl << "Unmanaged error! " << endl;
+  catch (...)
+  {
+    loctestnum++;
+    loctesterr++;
+    cout << endl
+         << "Unmanaged error! " << endl;
   }
   cout << "End of Vector<double> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
   testnum += loctestnum;
   testerr += loctesterr;
 }
 
-void stestVectorString(uint & testnum, uint & testerr) {
+void stestVectorString(uint &testnum, uint &testerr)
+{
   uint loctestnum = 0, loctesterr = 0;
-  cout << endl << "Begin of Vector<string> Test:" << endl;
-  try {
+  cout << endl
+       << "Begin of Vector<string> Test:" << endl;
+  try
+  {
     lasd::SortableVector<string> vec(2);
 
     Empty(loctestnum, loctesterr, vec, false);
@@ -126,7 +141,8 @@ void stestVectorString(uint & testnum, uint & testerr) {
 
     Exists(loctestnum, loctesterr, vec, true, string("A"));
 
-    MapPreOrder(loctestnum, loctesterr, vec, true, [](string & str) { MapStringAppend(str, string(" ")); });
+    MapPreOrder(loctestnum, loctesterr, vec, true, [](string &str)
+                { MapStringAppend(str, string(" ")); });
     TraversePreOrder(loctestnum, loctesterr, vec, true, &TraversePrint<string>);
     FoldPreOrder(loctestnum, loctesterr, vec, true, &FoldStringConcatenate, string("X"), string("XA B "));
     FoldPostOrder(loctestnum, loctesterr, vec, true, &FoldStringConcatenate, string("X"), string("XB A "));
@@ -135,7 +151,8 @@ void stestVectorString(uint & testnum, uint & testerr) {
 
     lasd::SortableVector<string> copvec(vec);
     EqualVector(loctestnum, loctesterr, vec, copvec, true);
-    MapPreOrder(loctestnum, loctesterr, vec, true, [](string & str) { MapStringAppend(str, string("!")); });
+    MapPreOrder(loctestnum, loctesterr, vec, true, [](string &str)
+                { MapStringAppend(str, string("!")); });
     NonEqualVector(loctestnum, loctesterr, vec, copvec, true);
 
     copvec = move(vec);
@@ -152,31 +169,39 @@ void stestVectorString(uint & testnum, uint & testerr) {
     movvec.Clear();
     Empty(loctestnum, loctesterr, movvec, true);
   }
-  catch (...) {
-    loctestnum++; loctesterr++;
-    cout << endl << "Unmanaged error! " << endl;
+  catch (...)
+  {
+    loctestnum++;
+    loctesterr++;
+    cout << endl
+         << "Unmanaged error! " << endl;
   }
   cout << "End of Vector<string> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
   testnum += loctestnum;
   testerr += loctesterr;
 }
 
-void stestVector(uint & testnum, uint & testerr) {
+void stestVector(uint &testnum, uint &testerr)
+{
   uint loctestnum = 0, loctesterr = 0;
   stestVectorInt(loctestnum, loctesterr);
   stestVectorDouble(loctestnum, loctesterr);
   stestVectorString(loctestnum, loctesterr);
   testnum += loctestnum;
   testerr += loctesterr;
-  cout << endl << "Exercise 1A - Vector (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
+  cout << endl
+       << "Exercise 1A - Vector (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
 }
 
 /* ************************************************************************** */
 
-void stestListInt(uint & testnum, uint & testerr) {
+void stestListInt(uint &testnum, uint &testerr)
+{
   uint loctestnum = 0, loctesterr = 0;
-  cout << endl << "Begin of List<int> Test:" << endl;
-  try {
+  cout << endl
+       << "Begin of List<int> Test:" << endl;
+  try
+  {
     lasd::List<int> lst;
     Empty(loctestnum, loctesterr, lst, true);
     Size(loctestnum, loctesterr, lst, true, 0);
@@ -250,19 +275,25 @@ void stestListInt(uint & testnum, uint & testerr) {
     Empty(loctestnum, loctesterr, movlst, true);
     Size(loctestnum, loctesterr, movlst, true, 0);
   }
-  catch (...) {
-    loctestnum++; loctesterr++;
-    cout << endl << "Unmanaged error! " << endl;
+  catch (...)
+  {
+    loctestnum++;
+    loctesterr++;
+    cout << endl
+         << "Unmanaged error! " << endl;
   }
   cout << "End of List<int> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
   testnum += loctestnum;
   testerr += loctesterr;
 }
 
-void stestListDouble(uint & testnum, uint & testerr) {
+void stestListDouble(uint &testnum, uint &testerr)
+{
   uint loctestnum = 0, loctesterr = 0;
-  cout << endl << "Begin of List<double> Test:" << endl;
-  try {
+  cout << endl
+       << "Begin of List<double> Test:" << endl;
+  try
+  {
     lasd::List<double> lst;
     Empty(loctestnum, loctesterr, lst, true);
     Size(loctestnum, loctesterr, lst, true, 0);
@@ -287,19 +318,25 @@ void stestListDouble(uint & testnum, uint & testerr) {
     FoldPreOrder(loctestnum, loctesterr, lst, true, &FoldAdd<double>, 0.0, 10.4);
     FoldPostOrder(loctestnum, loctesterr, lst, true, &FoldMultiply<double>, 1.0, 9.9825);
   }
-  catch (...) {
-    loctestnum++; loctesterr++;
-    cout << endl << "Unmanaged error! " << endl;
+  catch (...)
+  {
+    loctestnum++;
+    loctesterr++;
+    cout << endl
+         << "Unmanaged error! " << endl;
   }
   cout << "End of List<double> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
   testnum += loctestnum;
   testerr += loctesterr;
 }
 
-void stestListString(uint & testnum, uint & testerr) {
+void stestListString(uint &testnum, uint &testerr)
+{
   uint loctestnum = 0, loctesterr = 0;
-  cout << endl << "Begin of List<string> Test:" << endl;
-  try {
+  cout << endl
+       << "Begin of List<string> Test:" << endl;
+  try
+  {
     lasd::List<string> lst;
     Empty(loctestnum, loctesterr, lst, true);
     Size(loctestnum, loctesterr, lst, true, 0);
@@ -312,7 +349,8 @@ void stestListString(uint & testnum, uint & testerr) {
 
     Exists(loctestnum, loctesterr, lst, true, string("B"));
 
-    MapPreOrder(loctestnum, loctesterr, lst, true, [](string & str) { MapStringAppend(str, string(" ")); });
+    MapPreOrder(loctestnum, loctesterr, lst, true, [](string &str)
+                { MapStringAppend(str, string(" ")); });
     TraversePreOrder(loctestnum, loctesterr, lst, true, &TraversePrint<string>);
     FoldPreOrder(loctestnum, loctesterr, lst, true, &FoldStringConcatenate, string("X"), string("XA B "));
     FoldPostOrder(loctestnum, loctesterr, lst, true, &FoldStringConcatenate, string("X"), string("XB A "));
@@ -333,31 +371,39 @@ void stestListString(uint & testnum, uint & testerr) {
     coplst = move(lst);
     FoldPreOrder(loctestnum, loctesterr, coplst, true, &FoldStringConcatenate, string("?"), string("?CB A"));
   }
-  catch (...) {
-    loctestnum++; loctesterr++;
-    cout << endl << "Unmanaged error! " << endl;
+  catch (...)
+  {
+    loctestnum++;
+    loctesterr++;
+    cout << endl
+         << "Unmanaged error! " << endl;
   }
   cout << "End of List<string> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
   testnum += loctestnum;
   testerr += loctesterr;
 }
 
-void stestList(uint & testnum, uint & testerr) {
+void stestList(uint &testnum, uint &testerr)
+{
   uint loctestnum = 0, loctesterr = 0;
   stestListInt(loctestnum, loctesterr);
   stestListDouble(loctestnum, loctesterr);
   stestListString(loctestnum, loctesterr);
   testnum += loctestnum;
   testerr += loctesterr;
-  cout << endl << "Exercise 1A - List (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
+  cout << endl
+       << "Exercise 1A - List (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
 }
 
 /* ************************************************************************** */
 
-void stestVectorListInt(uint & testnum, uint & testerr) {
+void stestVectorListInt(uint &testnum, uint &testerr)
+{
   uint loctestnum = 0, loctesterr = 0;
-  cout << endl << "Begin of Vector/List<int> Test:" << endl;
-  try {
+  cout << endl
+       << "Begin of Vector/List<int> Test:" << endl;
+  try
+  {
     lasd::SortableVector<int> vec(3);
     SetAt(loctestnum, loctesterr, vec, true, 0, -1);
     SetAt(loctestnum, loctesterr, vec, true, 1, 0);
@@ -380,19 +426,25 @@ void stestVectorListInt(uint & testnum, uint & testerr) {
     lasd::List<int> coplstx(lst);
     EqualList(loctestnum, loctesterr, coplstx, coplst, true);
   }
-  catch (...) {
-    loctestnum++; loctesterr++;
-    cout << endl << "Unmanaged error! " << endl;
+  catch (...)
+  {
+    loctestnum++;
+    loctesterr++;
+    cout << endl
+         << "Unmanaged error! " << endl;
   }
   cout << "End of Vector/List<int> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
   testnum += loctestnum;
   testerr += loctesterr;
 }
 
-void stestVectorListDouble(uint & testnum, uint & testerr) {
+void stestVectorListDouble(uint &testnum, uint &testerr)
+{
   uint loctestnum = 0, loctesterr = 0;
-  cout << endl << "Begin of Vector/List<double> Test:" << endl;
-  try {
+  cout << endl
+       << "Begin of Vector/List<double> Test:" << endl;
+  try
+  {
     lasd::SortableVector<double> vec(3);
     SetAt(loctestnum, loctesterr, vec, true, 0, -0.5);
     SetAt(loctestnum, loctesterr, vec, true, 1, 0.0);
@@ -415,19 +467,25 @@ void stestVectorListDouble(uint & testnum, uint & testerr) {
     lasd::List<double> coplstx(lst);
     EqualList(loctestnum, loctesterr, coplstx, coplst, true);
   }
-  catch (...) {
-    loctestnum++; loctesterr++;
-    cout << endl << "Unmanaged error! " << endl;
+  catch (...)
+  {
+    loctestnum++;
+    loctesterr++;
+    cout << endl
+         << "Unmanaged error! " << endl;
   }
   cout << "End of Vector/List<double> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
   testnum += loctestnum;
   testerr += loctesterr;
 }
 
-void stestVectorListString(uint & testnum, uint & testerr) {
+void stestVectorListString(uint &testnum, uint &testerr)
+{
   uint loctestnum = 0, loctesterr = 0;
-  cout << endl << "Begin of Vector/List<string> Test:" << endl;
-  try {
+  cout << endl
+       << "Begin of Vector/List<string> Test:" << endl;
+  try
+  {
     lasd::SortableVector<string> vec(3);
     SetAt(loctestnum, loctesterr, vec, true, 0, string("A"));
     SetAt(loctestnum, loctesterr, vec, true, 1, string("B"));
@@ -474,30 +532,37 @@ void stestVectorListString(uint & testnum, uint & testerr) {
     TraversePreOrder(loctestnum, loctesterr, coplst, true, &TraversePrint<string>);
     EqualList(loctestnum, loctesterr, lst, coplst, false);
   }
-  catch (...) {
-    loctestnum++; loctesterr++;
-    cout << endl << "Unmanaged error! " << endl;
+  catch (...)
+  {
+    loctestnum++;
+    loctesterr++;
+    cout << endl
+         << "Unmanaged error! " << endl;
   }
   cout << "End of Vector/List<string> Test! (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
   testnum += loctestnum;
   testerr += loctesterr;
 }
 
-void stestVectorList(uint & testnum, uint & testerr) {
+void stestVectorList(uint &testnum, uint &testerr)
+{
   uint loctestnum = 0, loctesterr = 0;
   stestVectorListInt(loctestnum, loctesterr);
   stestVectorListDouble(loctestnum, loctesterr);
   stestVectorListString(loctestnum, loctesterr);
   testnum += loctestnum;
   testerr += loctesterr;
-  cout << endl << "Exercise 1A - Vector/List (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
+  cout << endl
+       << "Exercise 1A - Vector/List (Errors/Tests: " << loctesterr << "/" << loctestnum << ")" << endl;
 }
 
 /* ************************************************************************** */
 
-void testSimpleExercise1A(uint & testnum, uint & testerr) {
+void testSimpleExercise1A(uint &testnum, uint &testerr)
+{
   stestVector(testnum, testerr);
   stestList(testnum, testerr);
   stestVectorList(testnum, testerr);
-  cout << endl << "Exercise 1A (Simple Test) (Errors/Tests: " << testerr << "/" << testnum << ")" << endl;
+  cout << endl
+       << "Exercise 1A (Simple Test) (Errors/Tests: " << testerr << "/" << testnum << ")" << endl;
 }

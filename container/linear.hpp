@@ -1,180 +1,152 @@
-
 #ifndef LINEAR_HPP
 #define LINEAR_HPP
 
-/* ************************************************************************** */
-
 #include "mappable.hpp"
-
-/* ************************************************************************** */
 
 namespace lasd
 {
 
-  /* ************************************************************************** */
+  /*******************************************************************************************************************************************************/
 
+  /**
+   * Abstract template class LinearContainer that virtually extends PreOrderTraversableContainer and PostOrderTraversableContainer.
+   *
+   * Provides a base interface for linear containers with index access and support for traversals and folds.
+   */
   template <typename Data>
-  class LinearContainer : public virtual PreOrderTraversableContainer<Data>,
-                          public virtual PostOrderTraversableContainer<Data>
+  class LinearContainer : virtual public PreOrderTraversableContainer<Data>,
+                          virtual public PostOrderTraversableContainer<Data>
   {
-
-  private:
-    // ...
-
-  protected:
-    // ...
 
   public:
     // Destructor
     virtual ~LinearContainer() = default;
 
-    /* ************************************************************************ */
+    // Disable assignment operations
 
-    // Copy assignment
-    LinearContainer &operator=(const LinearContainer &) = delete;
-
-    // Move assignment
-    LinearContainer &operator=(LinearContainer &&) noexcept = delete;
-
-    /* ************************************************************************ */
+    LinearContainer &operator=(const LinearContainer &) = delete;     // Copy disabled
+    LinearContainer &operator=(LinearContainer &&) noexcept = delete; // Move disabled
 
     // Comparison operators
-    inline bool operator==(const LinearContainer &) const noexcept;
-    inline bool operator!=(const LinearContainer &) const noexcept;
-
-    /* ************************************************************************ */
+    virtual bool operator==(const LinearContainer &) const noexcept;
+    virtual bool operator!=(const LinearContainer &) const noexcept;
 
     // Specific member functions
 
-    virtual const Data &operator[](const unsigned long int) const = 0; // (non-mutable version; concrete function must throw std::out_of_range when out of range)
+    virtual const Data &operator[](ulong) const = 0; // Read-only access (out_of_range if invalid index)
+    virtual const Data &Front() const = 0;           // First element (length_error if empty)
+    virtual const Data &Back() const = 0;            // Last element (length_error if empty)
 
-    virtual Data &operator[](const unsigned long int) = 0;
-
-    virtual Data &Front() const; // (non-mutable version; concrete function must throw std::length_error when empty)
-
-    virtual Data &Front();
-
-    virtual Data &Back() const; // (non-mutable version; concrete function must throw std::length_error when empty)
-
-    virtual Data &Back();
-    /* ************************************************************************ */
-
-    // Specific member function (inherited from TraversableContainer)
-
+    // Member function (inherited from TraversableContainer)
     using typename TraversableContainer<Data>::TraverseFun;
+    void Traverse(TraverseFun) const override;
 
-    inline void Traverse(TraverseFun) const override; // Override TraversableContainer member
+    // Member function (inherited from PreOrderTraversableContainer)
+    void PreOrderTraverse(TraverseFun) const override;
 
-    /* ************************************************************************ */
+    // Member function (inherited from PostOrderTraversableContainer)
+    void PostOrderTraverse(TraverseFun) const override;
 
-    // Specific member function (inherited from PreOrderTraversableContainer)
-
-    void PreOrderTraverse(TraverseFun) const override; // Override PreOrderTraversableContainer member
-
-    /* ************************************************************************ */
-
-    // Specific member function (inherited from PostOrderTraversableContainer)
-
-    inline void PostOrderTraverse(TraverseFun) const override; // Override PostOrderTraversableContainer member
+    // Generic fold (inherited from TraversableContainer)
     template <typename Accumulator>
     using FoldFun = typename TraversableContainer<Data>::template FoldFun<Accumulator>;
 
     template <typename Accumulator>
     Accumulator Fold(FoldFun<Accumulator>, const Accumulator &) const;
 
+    // Pre-order fold (inherited from PreOrderTraversableContainer)
     template <typename Accumulator>
     Accumulator PreOrderFold(FoldFun<Accumulator>, const Accumulator &) const;
 
+    // Post-order fold (inherited from PostOrderTraversableContainer)
     template <typename Accumulator>
     Accumulator PostOrderFold(FoldFun<Accumulator>, const Accumulator &) const;
   };
 
-  /* ************************************************************************** */
+  /*******************************************************************************************************************************************************/
 
+  /**
+   * Abstract class MutableLinearContainer that virtually extends LinearContainer and the mappable versions.
+   *
+   * Introduces modifiable access to the elements of the linear container.
+   */
   template <typename Data>
-  class MutableLinearContainer : virtual public LinearContainer<Data>, virtual public PreOrderMappableContainer<Data>, virtual public PostOrderMappableContainer<Data>
+  class MutableLinearContainer : virtual public LinearContainer<Data>,
+                                 virtual public PreOrderMappableContainer<Data>,
+                                 virtual public PostOrderMappableContainer<Data>
   {
-
-  private:
-    // ...
-
-  protected:
-    // ...
 
   public:
     // Destructor
     virtual ~MutableLinearContainer() = default;
 
-    /* ************************************************************************ */
+    // Disable assignment operations
 
-    // Copy assignment
-    MutableLinearContainer operator=(const MutableLinearContainer &) = delete; // Copy assignment of abstract types is not possible.
+    MutableLinearContainer &operator=(const MutableLinearContainer &) = delete;
+    MutableLinearContainer &operator=(MutableLinearContainer &&) noexcept = delete;
 
-    // Move assignment
-    MutableLinearContainer operator=(const MutableLinearContainer &&) = delete; // Move assignment of abstract types is not possible.
+    // Expose the const versions of the inherited functions
+    using LinearContainer<Data>::operator[];
+    using LinearContainer<Data>::Front;
+    using LinearContainer<Data>::Back;
 
-    /* ************************************************************************ */
+    // Specific member functions (modifiable versions)
 
-    // Specific member functions
+    virtual Data &operator[](ulong) = 0; // Modifiable access (out_of_range if invalid index)
+    virtual Data &Front() = 0;           // First element (length_error if empty)
+    virtual Data &Back() = 0;            // Last element (length_error if empty)
 
-    virtual Data &operator[](ulong) = 0; // (mutable version; concrete function must throw std::out_of_range when out of range)
-
-    virtual Data &Front() = 0; // (mutable version; concrete function must throw std::length_error when empty)
-
-    virtual Data &Back() = 0; // (mutable version; concrete function must throw std::length_error when empty)
-
-    /* ************************************************************************ */
-
-    // Specific member function (inherited from MappableContainer)
-
+    // Member function (inherited from MappableContainer)
     using typename MappableContainer<Data>::MapFun;
+    void Map(MapFun) override;
 
-    void Map(MapFun) override; // Override MappableContainer member
+    // Member function (inherited from PreOrderMappableContainer)
+    void PreOrderMap(MapFun) override;
 
-    /* ************************************************************************ */
-
-    // Specific member function (inherited from PreOrderMappableContainer)
-    void PreOrderMap(MapFun) override;  // Override PreOrderMappableContainer member
-    void PostOrderMap(MapFun) override; // Override PostOrderMappableContainer member
-
-    /* ************************************************************************ */
-
-    // Specific member function (inherited from PostOrderMappableContainer)
+    // Member function (inherited from PostOrderMappableContainer)
+    void PostOrderMap(MapFun) override;
   };
 
+  /*******************************************************************************************************************************************************/
+
+  /**
+   * Abstract class SortableLinearContainer that extends MutableLinearContainer.
+   *
+   * Introduces sorting capabilities on modifiable linear containers.
+   */
   template <typename Data>
   class SortableLinearContainer : virtual public MutableLinearContainer<Data>
   {
-    // Must extend MutableLinearContainer<Data>
 
   private:
-    // ...
+    // Helper functions for sorting
     virtual void QuickSort(ulong, ulong);
     virtual ulong Partition(ulong, ulong);
 
-  protected:
-    // ...
-
   public:
     // Destructor
-    ~SortableLinearContainer() = default;
+    virtual ~SortableLinearContainer() = default;
 
-    /* ************************************************************************ */
+    // Disable assignment operations
 
-    // Copy assignment
     SortableLinearContainer &operator=(const SortableLinearContainer &) = delete;
-
-    // Move assignment
     SortableLinearContainer &operator=(SortableLinearContainer &&) noexcept = delete;
-
-    /* ************************************************************************ */
 
     // Specific member function
 
-    virtual void Sort() const noexcept = 0;
+    /**
+     * Public method to sort the container using quicksort.
+     */
+    virtual void Sort()
+    {
+      if (this->Size() > 1)
+      {
+        QuickSort(0, this->Size() - 1);
+      }
+    }
   };
 
-  /* ************************************************************************** */
+  /*******************************************************************************************************************************************************/
 
 }
 

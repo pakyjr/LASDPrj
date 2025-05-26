@@ -1,5 +1,6 @@
 namespace lasd
 {
+
     template <typename Data>
     template <typename Accumulator>
     Accumulator TraversableContainer<Data>::Fold(FoldFun<Accumulator> fun, const Accumulator &acc) const
@@ -24,8 +25,6 @@ namespace lasd
         return found;
     }
 
-    /*******************************************************************************************************************************************************/
-
     template <typename Data>
     template <typename Accumulator>
     Accumulator PreOrderTraversableContainer<Data>::PreOrderFold(FoldFun<Accumulator> fun, const Accumulator &acc) const
@@ -49,8 +48,6 @@ namespace lasd
         return PreOrderFold(fun, acc);
     }
 
-    /*******************************************************************************************************************************************************/
-
     template <typename Data>
     template <typename Accumulator>
     Accumulator PostOrderTraversableContainer<Data>::PostOrderFold(FoldFun<Accumulator> fun, const Accumulator &acc) const
@@ -73,4 +70,5 @@ namespace lasd
     {
         return PostOrderFold(fun, acc);
     }
+
 }

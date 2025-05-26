@@ -101,8 +101,8 @@ namespace lasd
     void Sort() override;
 
   protected:
-    void QuickSort(unsigned long, unsigned long);
-    unsigned long Partition(unsigned long, unsigned long);
+    void QuickSort(unsigned long, unsigned long) override;
+    unsigned long Partition(unsigned long, unsigned long) override;
     void Swap(unsigned long, unsigned long);
   };
 
